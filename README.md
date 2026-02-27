@@ -1,8 +1,9 @@
 # Agentic Coding Template
 
 A stack-agnostic template encoding agentic coding best practices from
-Tactical Agentic Coding (TAC). Use it to bootstrap new projects or add
-agentic workflows to existing ones.
+Tactical Agentic Coding (TAC). Use it to bootstrap new projects, add
+agentic workflows to existing ones, or point Claude at it as a reference
+to apply the patterns to any project.
 
 The core idea: **plan first, then implement**. Slash commands generate
 structured plans in `specs/`, you review and approve them, then a single
@@ -10,44 +11,61 @@ command executes the plan step by step with automatic validation.
 
 ---
 
-## Quick Start
+## How to Use This Template
 
-**1. Clone or copy the template into your project.**
+### Option A: Use as a Reference (Recommended)
+
+Point Claude at this repo from any project you're working on. In your
+project's Claude Code session, say:
+
+```
+Read <path-or-url-to-this-repo> and apply the agentic coding patterns
+to this project. Set up CLAUDE.md, .claude/commands/, specs/, and
+ai_docs/ customized for my stack.
+```
+
+Claude will read this template's structure, commands, and patterns, then
+recreate them adapted to your project's tech stack and conventions. This
+is the fastest way to get the agentic workflow into an existing project.
+
+You can also be more targeted:
+
+```
+Read <path-or-url>/docs/agentic-coding-guide.md and apply the
+plan-then-implement workflow to my project.
+```
+
+```
+Read <path-or-url>/.claude/commands/ and create equivalent commands
+for my Python/FastAPI project.
+```
+
+### Option B: Clone for New Projects
 
 ```bash
-git clone https://github.com/your-org/agentic-template.git my-project
+git clone <repo-url> my-project
 cd my-project
+rm -rf .git && git init
 ```
 
-**2. Customize `CLAUDE.md`.**
+Then customize:
+1. Fill in `CLAUDE.md` (project name, tech stack, test/lint/start commands)
+2. Add stack-specific permissions to `.claude/settings.json`
+3. Add library docs to `ai_docs/`
+4. Start using `/feature`, `/bug`, `/chore`, `/implement`
 
-Open `CLAUDE.md` and fill in the placeholders:
-- Replace `YOUR_PROJECT_NAME` with your project name.
-- Add a one-line description.
-- List your tech stack (language, framework, database, package manager).
-- Replace the placeholder commands with real ones:
-  ```
-  Test:    npm test
-  Lint:    npm run lint
-  Start:   npm run dev
-  Install: npm install
-  ```
+### Option C: Copy Into an Existing Project
 
-**3. Extend `.claude/settings.json` with stack-specific permissions.**
+Cherry-pick the pieces you need:
 
-Add your test runner, linter, and build commands so the agent can run them
-without prompting:
-```json
-"Bash(npm test:*)",
-"Bash(npm run lint:*)",
-"Bash(npm run build:*)"
+```bash
+cp -r agentic-template/.claude/ my-project/.claude/
+cp -r agentic-template/specs/ my-project/specs/
+cp agentic-template/CLAUDE.md my-project/CLAUDE.md
+mkdir -p my-project/ai_docs
 ```
 
-**4. Start using slash commands.**
-
-```
-/feature "add user authentication"
-```
+Then customize `CLAUDE.md` and `.claude/settings.json` for your stack.
 
 ---
 
